@@ -1,8 +1,8 @@
 import pygame
 from pygame.locals import *
 
-from PyOpenGL.GL import *
-from PyOpenGL.GLU import *
+from OpenGL.GL import *
+from OpenGL.GLU import *
 
 def main():
     pygame.init()
