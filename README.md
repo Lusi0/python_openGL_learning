@@ -2,7 +2,15 @@
  prototype python OpenGL
 
 
-READ ME UPDATES 12/14/2021
+READ ME UPDATES: 12/14/2021
+
+I have made a "functional" physics engine that I will use for the time being, I am still working of implimenting collision detectiion
+
+I am working on making a player object and I have already created a physics object
+
+I think that most of the stuff in the game is going to end up being based on rectangles as they are very easy to work with, I might change my mind on this if it becomes apparent that alternative solutions are more effective/efficient for my purposes. 
+
+READ ME UPDATES: 12/14/2021
 
 Movement is now working properly! i can move the square around and there is no artifacts and the screen doesn't keep the old drawing there!
 
