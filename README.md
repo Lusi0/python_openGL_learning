@@ -2,7 +2,17 @@
  prototype python OpenGL
 
 
-READ ME UPDATES: 12/14/2021
+READ ME UPDATES: 12/17/2021
+
+HOLY SHOOT COLLISION DETECTION WORKS!!!!!
+
+i guess now i can do other stuff with it???
+
+
+
+
+
+READ ME UPDATES: 12/15/2021
 
 I have made a "functional" physics engine that I will use for the time being, I am still working of implimenting collision detectiion
 

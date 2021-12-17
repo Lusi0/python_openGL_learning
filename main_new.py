@@ -11,15 +11,13 @@ gravity = -0.001
 gameobjects = []
 
 class rectangle:
-    def __init__(self, x, y, size, color):
+    def __init__(self, x, y, size, color, id):
         self.x = x
         self.y = y
         self.size = size
         self.color = color
-        self.collided_bottom = False
-        self.collided_top = False
-        self.collided_left = False
-        self.collided_right = False
+        self.collided = False
+        self.id = id
     
     def draw(self):
         glBegin(GL_QUADS)
@@ -38,32 +36,28 @@ class rectangle:
         self.y = y
 
     def collide(self, other):
-        if self.x + self.size[0] >= other.x and self.x <= other.x + other.size[0]:
-            if self.y + self.size[1] >= other.y and self.y <= other.y + other.size[1]:
-                return True
-        return False
-        
-    def change_collided(self, other):
-        if other.x < self.x:
-            self.collided_left = True
-        elif other.x + other.size[0] > self.x + self.size[0]:
-            self.collided_right = True
-        elif other.y < self.y:
-            self.collided_top = True
-        elif other.y + other.size[1] > self.y + self.size[1]:
-            self.collided_bottom = True
+        if other.x < self.x + self.size[0] < other.x + other.size[0] and other.y < self.y + self.size[1] < other.y + other.size[1]:
+            self.collided = True
+            return True
+        if other.x < self.x < other.x + other.size[0] and other.y < self.y + self.size[1] < other.y + other.size[1]:
+            self.collided = True
+            return True
+        if other.x < self.x + self.size[0] < other.x + other.size[0] and other.y < self.y < other.y + other.size[1]:
+            self.collided = True
+            return True
+        if other.x < self.x < other.x + other.size[0] and other.y < self.y < other.y + other.size[1]:
+            self.collided = True
+            return True
+
 
 class physicsObject(rectangle):
-    def __init__(self, x, y, size, color, mass, friction):
-        super().__init__(x, y, size, color)
+    def __init__(self, x, y, size, color, id,  mass, friction):
+        super().__init__(x, y, size, color, id)
         self.mass = mass
         self.velocity = [0, 0]
         self.acceleration = [0, 0]
         self.friction = friction
-        self.collided_bottom = False
-        self.collided_top = False
-        self.collided_left = False
-        self.collided_right = False
+        self.collided = False
 
 
     def applyForce(self, force):
@@ -71,7 +65,7 @@ class physicsObject(rectangle):
         self.acceleration[1] += force[1] / self.mass
 
     def update(self):
-        if self.collided_bottom:
+        if self.collided:
             self.velocity[1] = 0
         else:
             self.velocity[1] += gravity
@@ -80,12 +74,14 @@ class physicsObject(rectangle):
         self.velocity[0] += self.acceleration[0]
         self.velocity[1] += self.acceleration[1]
         self.transform(self.x + self.velocity[0], self.y + self.velocity[1])
+
+
         
 
 
 class player(physicsObject):
-    def __init__(self, x, y, size, color, jump_key, left_key, right_key, duck_key, speed):
-        super().__init__(x, y, size, color, 1, 0.1)
+    def __init__(self, x, y, size, color, id , jump_key, left_key, right_key, duck_key, speed):
+        super().__init__(x, y, size, color, id, 1, 0.1)
         self.jump_key = jump_key
         self.left_key = left_key
         self.right_key = right_key
@@ -96,6 +92,7 @@ class player(physicsObject):
         self.duck_size = size * 0.5
         self.duck_y = y + self.duck_size
         self.duck_color = [0.5, 0.5, 0.5]
+        self.collided = False
 
         
 
@@ -112,8 +109,8 @@ class player(physicsObject):
 
 
 
-gameobjects.append(rectangle(-4, -2, (6,.1), (1,0,0)))
-gameobjects.append(physicsObject(0, 0, (1, 1), (1, 0, 0), 1, 0.1))
+gameobjects.append(rectangle(-4, -2, (6,.1), (1,0,0), "ground"))
+gameobjects.append(physicsObject(0, 0, (1, 1), (1, 0, 0), "phsyics object", 1, 0.1))
 
 
 def main():
@@ -139,13 +136,12 @@ def main():
             obj.draw()
         for obj in gameobjects:
             for other in gameobjects:
-                if obj.collide(other):
-                    obj.change_collided(other)
-                    other.change_collided(obj)
+                obj.collide(other)
+
                 
 
         pygame.display.flip()
-        pygame.time.wait(100)
+        pygame.time.wait(10)
 main()
 
 
