@@ -2,14 +2,15 @@
  prototype python OpenGL
 
 
+
+
 READ ME UPDATES: 12/17/2021
 
 HOLY SHOOT COLLISION DETECTION WORKS!!!!!
 
 i guess now i can do other stuff with it???
 
-
-
+it summons stuff on interactions
 
 
 READ ME UPDATES: 12/15/2021

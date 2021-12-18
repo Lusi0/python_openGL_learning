@@ -114,6 +114,7 @@ gameobjects.append(physicsObject(0, 0, (1, 1), (1, 0, 0), "phsyics object", 1, 0
 
 
 def main():
+    myobj = gameobjects[1]
     pygame.init()
     display = (500, 500)
     screen = pygame.display.set_mode(display, DOUBLEBUF|OPENGL)
@@ -128,16 +129,17 @@ def main():
                 pygame.quit()
                 quit()
         glClearColor(0.0,0.0,0.0,0.0)
-        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        for obj in gameobjects:
-            print(obj.x, obj.y)
-        for obj in gameobjects:
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
+        for num,obj in enumerate(gameobjects):
             obj.update()
             obj.draw()
-        for obj in gameobjects:
             for other in gameobjects:
                 obj.collide(other)
-
+        for obj in gameobjects:
+            for other in gameobjects:
+                if myobj.collide(other):
+                    gameobjects.append(physicsObject(random.random()/10, 1, (1, 1), (1, 0, 0), "phsyics object", 1, 0.1))
+                    myobj = gameobjects[-1]
                 
 
         pygame.display.flip()
