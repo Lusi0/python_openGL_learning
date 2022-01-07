@@ -1,7 +1,9 @@
 # python_openGL_learning
  prototype python OpenGL
 
+READ ME UPDATES: 1/5/2022
 
+ADDED BASIC PLAYER MOVEMENT! IT WORKS
 
 
 READ ME UPDATES: 12/17/2021
