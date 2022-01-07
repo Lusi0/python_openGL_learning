@@ -89,16 +89,20 @@ class player(physicsObject):
         self.speed = speed
         self.jump_velocity = 0.5
         self.ducked = False
-        self.duck_size = size * 0.5
-        self.duck_y = y + self.duck_size
-        self.duck_color = [0.5, 0.5, 0.5]
+        self.duck_size = (size[0] * 0.5, size[1] * 0.5)
         self.collided = False
-
         
 
     def move(self, x, y):
-        if pygame.key.get_pressed()[self.jump_key]:
+        keys = pygame.key.get_pressed()
+        if keys[self.jump_key]:
             self.jump()
+        if keys[self.left_key]:
+            print("left")
+            self.x -= self.speed
+        if keys[self.right_key]:
+            print("right")
+            self.x += self.speed
     
     def jump(self):
         if not self.ducked:
@@ -110,8 +114,8 @@ class player(physicsObject):
 
 
 gameobjects.append(rectangle(-4, -2, (6,.1), (1,0,0), "ground"))
-gameobjects.append(physicsObject(0, 0, (1, 1), (1, 0, 0), "phsyics object", 1, 0.1))
-
+# gameobjects.append(physicsObject(0, 0, (1, 1), (1, 0, 0), "phsyics object", 1, 0.1))
+gameobjects.append(player(0, 0, (1, 1), (1, 0, 0), "player", pygame.K_SPACE, pygame.K_LEFT, pygame.K_RIGHT, pygame.K_DOWN, 0.1))
 
 def main():
     myobj = gameobjects[1]
@@ -133,19 +137,21 @@ def main():
         for num,obj in enumerate(gameobjects):
             obj.update()
             obj.draw()
+            if type(obj) == player:
+                obj.move(0, 0)
             for other in gameobjects:
                 obj.collide(other)
         for obj in gameobjects:
             for other in gameobjects:
                 if myobj.collide(other):
-                    gameobjects.append(physicsObject(random.random()/10, 1, (1, 1), (1, 0, 0), "phsyics object", 1, 0.1))
-                    myobj = gameobjects[-1]
+                    pass
+                #     gameobjects.append(physicsObject(random.random()/10, 1, (1, 1), (1, 0, 0), "phsyics object", 1, 0.1))
+                #     myobj = gameobjects[-1]
                 
 
         pygame.display.flip()
         pygame.time.wait(10)
 main()
-
 
 
 
