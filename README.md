@@ -1,6 +1,14 @@
 # python_openGL_learning
  prototype python OpenGL
 
+READ ME UPDATES: 1/10/2022
+
+FIANALLY FINISHED DUCKING AND JUMPING
+
+it works...
+sort of
+
+
 READ ME UPDATES: 1/5/2022
 
 ADDED BASIC PLAYER MOVEMENT! IT WORKS

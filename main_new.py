@@ -61,12 +61,15 @@ class physicsObject(rectangle):
 
 
     def applyForce(self, force):
-        self.acceleration[0] += force[0] / self.mass
-        self.acceleration[1] += force[1] / self.mass
+        self.velocity[0] += force[0] / self.mass
+        self.velocity[1] += force[1] / self.mass
 
     def update(self):
         if self.collided:
             self.velocity[1] = 0
+            # move the object away from the collision
+            self.transform(self.x + self.velocity[0], self.y + self.velocity[1])
+            self.collided = False
         else:
             self.velocity[1] += gravity
         
@@ -87,26 +90,44 @@ class player(physicsObject):
         self.right_key = right_key
         self.duck_key = duck_key
         self.speed = speed
-        self.jump_velocity = 0.5
+        self.jump_velocity = 0.05
+        self.jumped = False
         self.ducked = False
-        self.duck_size = (size[0] * 0.5, size[1] * 0.5)
+        self.original_size = size
+        self.duck_size = (size[0] * 1, size[1] * 0.75)
         self.collided = False
         
 
     def move(self, x, y):
+        print(self.velocity)
         keys = pygame.key.get_pressed()
         if keys[self.jump_key]:
             self.jump()
         if keys[self.left_key]:
-            print("left")
             self.x -= self.speed
         if keys[self.right_key]:
-            print("right")
             self.x += self.speed
+        if keys[self.duck_key]:
+            self.ducked = True
+            self.duck()
+        else:
+            self.ducked = False
+            self.size = self.original_size
     
+    # jump function that checks if the player is on the ground and then applies a force to the player
     def jump(self):
-        if not self.ducked:
-            self.y_velocity += self.jump_velocity
+        if self.jumped == True:
+            if self.velocity[1] == 0:
+                self.jumped = False
+        if self.jumped == False:
+            self.y += 0.1
+            self.applyForce([0, self.jump_velocity])
+            self.jumped = True
+
+    def duck(self):
+        print("duck")
+        self.size = self.duck_size
+
 
 
 
@@ -115,7 +136,7 @@ class player(physicsObject):
 
 gameobjects.append(rectangle(-4, -2, (6,.1), (1,0,0), "ground"))
 # gameobjects.append(physicsObject(0, 0, (1, 1), (1, 0, 0), "phsyics object", 1, 0.1))
-gameobjects.append(player(0, 0, (1, 1), (1, 0, 0), "player", pygame.K_SPACE, pygame.K_LEFT, pygame.K_RIGHT, pygame.K_DOWN, 0.1))
+gameobjects.append(player(0, 0, (1, 1), (1, 0, 0), "player", pygame.K_UP, pygame.K_LEFT, pygame.K_RIGHT, pygame.K_DOWN, 0.1))
 
 def main():
     myobj = gameobjects[1]
