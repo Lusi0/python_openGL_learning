@@ -50,6 +50,12 @@ class rectangle:
             return True
 
 
+class button(rectangle):
+    def __init__(self, x, y, size, color, id):
+        super().__init__(x, y, size, color, id)
+    
+
+
 class physicsObject(rectangle):
     def __init__(self, x, y, size, color, id,  mass, friction):
         super().__init__(x, y, size, color, id)
