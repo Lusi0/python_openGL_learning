@@ -1,6 +1,13 @@
 # python_openGL_learning
  prototype python OpenGL
 
+
+READ ME UPDATES: 1/12/2022
+
+cleaned up project by a significat amount, spread out classes by type to allow for better readiblity and ease of use.
+
+work on buttons started but still remains incomplete
+
 READ ME UPDATES: 1/10/2022
 
 FIANALLY FINISHED DUCKING AND JUMPING
