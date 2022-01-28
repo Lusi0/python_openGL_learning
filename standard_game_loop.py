@@ -26,14 +26,12 @@ def gameloop(scene, input_scene, input_none):
                 quit()
             if event.type == pygame.MOUSEBUTTONUP:
                 pos = pygame.mouse.get_pos()
-                if event.button == 1:
-                    for obj in main_game.objects:
-                        if obj == button:
-                            if obj.collide(pos):
-                                print("clicked")
-                                obj.color = (1, 0, 0)
-                            else:
-                                obj.color = (0, 0, 1)
+                print(pos)
+                for obj in scene.objects:
+                    print(obj.click(pos),(obj.x, obj.y, obj.size))
+                    if obj.click(pos):
+                        print("clicked")
+                        obj.on_click()
         for funct in input_scene:
             k = funct(scene)
             if k is scene:

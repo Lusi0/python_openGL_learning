@@ -23,6 +23,12 @@ physicsObject(-2, -1, (1, 1), (1, 0.2, 0), "physicsObject",bounce_collision,1,1,
 ], 
 -0.001)
 
+def onclick():
+    print("click")
+
+button_test = scene("button_test", [button(-2, -2, (1, 1), (1, 0, 0), "button",default_collision,"click me",(1,0,1),onclick()),
+])
+
 test_bounce = gravity_scene("test_bounce", [rectangle(-2, -4, (.1,6), (1,0,0), "ground",default_collision),rectangle(2, 4, (.1,6), (1,0,0), "ground",default_collision),rectangle(4, 2, (6,.1), (1,0,0), "ground",default_collision),rectangle(-4, -2, (6,.1), (1,0,0), "ground",default_collision),physicsObject(0,0,(1,1),(1,0,0), "box",bounce_collision,1,1,1)], -0.001)
 
 test_screen = gravity_scene("text_screen", [],0.00)
@@ -56,4 +62,4 @@ def create_cube(scene):
         memory = 0
         return None
 
-gameloop(main_game,[create_cube],[])
+gameloop(button_test,[],[])

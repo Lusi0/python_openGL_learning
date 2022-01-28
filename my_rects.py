@@ -1,9 +1,12 @@
+from re import L
+from turtle import onclick
 from typing import Text
 import pygame
 from pygame.locals import *
 
 from OpenGL.GL import *
 from OpenGL.GLU import *
+from OpenGL.GLUT import *
 import random
 
 class rectangle:
@@ -54,17 +57,24 @@ class rectangle:
 
 
 class button(rectangle):
-    def __init__(self, x, y, size, color, id, collision_func, text, text_color):
+    def __init__(self, x, y, size, color, id, collision_func, text, text_color, onclick):
         super().__init__(x, y, size, color, id, collision_func)
         self.text = text
         self.text_color = text_color
+        self.onclick_ = onclick
 
     def draw(self):
         super().draw()
-        glColor3fv(self.text_color)
-        glRasterPos2f(self.x, self.y)
-        for char in self.text:
-            glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, ord(char))
+    
+    def click(self, xy):
+        if self.x < xy[0] < self.x + self.size[0] and self.y < xy[1] < self.y + self.size[1]:
+            return True
+        else:
+            return False
+
+    def onclick():
+        self.onclick_()
+
 
 
 
